@@ -1,6 +1,8 @@
 # Set base image (host OS)
 FROM tensorflow/tensorflow:2.4.0-gpu
 
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys A4B469963BF863CC
+
 RUN apt update && \
     apt install --no-install-recommends -y build-essential software-properties-common && \
     add-apt-repository -y ppa:deadsnakes/ppa && \
@@ -23,8 +25,6 @@ RUN python3.8 -m pip install --upgrade pip && \
 
 # Copy the content of the local src directory to the working directory
 COPY app .
-
-CMD alias python3=/usr/bin/python3.8
 
 # Specify the command to run on container start
 CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
